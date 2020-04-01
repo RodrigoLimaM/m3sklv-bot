@@ -31,7 +31,7 @@ module.exports = function sort(msg) {
   
     let embedA = new MessageEmbed()
       .setColor('#0099ff')
-      .setTitle('🏴 Sorteio de Times 🏴')
+      .setTitle(':flag_white:  Sorteio de Times :flag_white: ')
       .addFields(
         { name: 'TIME 🅰', value: team1, inline: true },
         { name: 'TIME 🅱', value: team2, inline: true },
@@ -39,6 +39,5 @@ module.exports = function sort(msg) {
       .setFooter('Criado com ❤ por M3SKLV T3CH');
       msg.channel.send(embedA)
   }
-
 }
 
