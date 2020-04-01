@@ -39,5 +39,5 @@ module.exports = function sort(msg) {
       .setFooter('Criado com ❤ por M3SKLV T3CH');
       msg.channel.send(embedA)
   }
-
 }
+
