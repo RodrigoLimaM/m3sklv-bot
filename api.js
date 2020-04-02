@@ -2,12 +2,6 @@ const axios = require('axios');
 
 const hostname = 'https://api.hgbrasil.com/weather?woeid=455827'
 
-// module.exports = fetch(hostame, (err, res, body) => {
-//   const weatherBody = JSON.parse(body)
-//   console.log(`máxima de ${weatherBody.results.forecast[0].max} º graus | minima de ${weatherBody.results.forecast[0].min} º graus`)
-//   return `máxima de ${weatherBody.results.forecast[0].max} º graus | minima de ${weatherBody.results.forecast[0].min} º graus`
-// })
-
 module.exports = function getWeather(){
     return axios.get(hostname)
     .then(function (response) {
@@ -23,7 +17,7 @@ module.exports = function getWeather(){
             emoji = ':thermometer:'
         }
         return `:arrow_up: Máxima de ${weatherBody.results.forecast[0].max} º graus
-                
+
                 :arrow_down: Mínima de ${weatherBody.results.forecast[0].min} º graus
 
                 ${emoji} ${weatherBody.results.forecast[0].description} ${emoji}`
