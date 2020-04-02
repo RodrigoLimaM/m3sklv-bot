@@ -9,7 +9,8 @@ module.exports = function commands(msg) {
                         .setTitle('🤖 Comandos do m3sklvbot 🤖')
                         .setDescription(`
                         **!ajuda, !help, !comandos ou !commands** - Mostra todos os comandos do nosso bot;
-                        **!sorteio** - Realiza sorteio para X5.
+                        **!sorteio** - Realiza sorteio para X5;
+                        **!clima, !tempo ou !weather** - Mostra a previsão do tempo de hoje para São Paulo.
                         `)
                         .setFooter('Criado com ❤ por M3SKLV T3CH')
                         .setColor('#fff200'))
