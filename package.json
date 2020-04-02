@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "discord.js": "^12.1.1",
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "request": "^2.88.2"
   },
   "devDependencies": {},
   "scripts": {
