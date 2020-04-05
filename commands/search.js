@@ -12,14 +12,14 @@ module.exports = function search(msg) {
             if(typeof nextEvent.link === 'string') {
                 msg.channel.send(new MessageEmbed()
                             .setTitle('🤖 Pesquisa 🤖')
-                            .addField(nextEvent.link || 'pt.wikipedia.org', nextEvent.body || 'Não encontrado :(')
+                            .addField(nextEvent.link +' :mag:' || 'pt.wikipedia.org', nextEvent.body || 'Não encontrado :(')
                             .setImage(nextEvent.image)
                             .setFooter('Criado com ❤ por M3SKLV T3CH')
                             .setColor('#fff200'))
             } else {
                 msg.channel.send(new MessageEmbed()
                             .setTitle('🤖 Pesquisa 🤖')
-                            .addField('pt.wikipedia.org', 'Não encontrado :(')
+                            .addField('pt.wikipedia.org' +' :mag:', 'Não encontrado :(')
                             .setFooter('Criado com ❤ por M3SKLV T3CH')
                             .setColor('#fff200'))
             }
