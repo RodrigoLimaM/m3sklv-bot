@@ -10,7 +10,8 @@ module.exports = function commands(msg) {
                         .setDescription(`
                         **!ajuda, !help, !comandos ou !commands** - Mostra todos os comandos do nosso bot;
                         **!sorteio** - Realiza sorteio para X5;
-                        **!clima, !tempo ou !weather** - Mostra a previsão do tempo de hoje para São Paulo.
+                        **!clima, !tempo ou !weather** - Mostra a previsão do tempo de hoje para São Paulo;
+                        **!search ou !pesquisa** - Realiza e mostra os resultados de uma pesquisa.
                         `)
                         .setFooter('Criado com ❤ por M3SKLV T3CH')
                         .setColor('#fff200'))

@@ -7,10 +7,9 @@ module.exports = function weather(msg) {
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return
     else if(command === 'tempo' || command === 'weather' || command === 'clima') {
-        weatherAPI().then((nextEvent) => {
+        weatherAPI().getWeather().then((nextEvent) => {
             msg.channel.send(new MessageEmbed()
                         .setTitle('🤖 Temperatura 🤖')
-                        .addField('\u200B','\u200B')
                         .addField('São Paulo', nextEvent)
                         .setFooter('Criado com ❤ por M3SKLV T3CH')
                         .setColor('#fff200'))
