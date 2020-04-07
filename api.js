@@ -9,13 +9,21 @@ module.exports = function() {
             return axios.get(searchHostname.replace('SEARCH', search.replace(/ /g, '+')))
             .then(function (response){
                 const searchBody = response.data
-                return {
-                    body : searchBody.itemListElement[0].result.detailedDescription.articleBody,
-                    description: searchBody.itemListElement[0].result.description,
-                    image: searchBody.itemListElement[0].result.image.contentUrl
+                if (searchBody.itemListElement[0].result.description != undefined && searchBody.itemListElement[0].result.image.contentUrl != undefined){
+                    return {
+                        body : searchBody.itemListElement[0].result.detailedDescription.articleBody,
+                        link: searchBody.itemListElement[0].result.detailedDescription.url,
+                        image: searchBody.itemListElement[0].result.image.contentUrl
+                    }
+                } else if (searchBody.itemListElement[0].result.detailedDescription.url) {
+                    return {
+                        body : searchBody.itemListElement[0].result.detailedDescription.articleBody,
+                        link: searchBody.itemListElement[0].result.detailedDescription.url
+                    }
                 }
 
-            }).catch(err => 'Não encontrado :(')
+            })
+            .catch(err => 'Não encontrado :(')
         },
 
         getWeather: function getWeather(){

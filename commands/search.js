@@ -7,14 +7,22 @@ module.exports = function search(msg) {
     const command = msg.content.slice(prefix.length).split(' ').shift().toLowerCase();
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return
-    else if(command === 'search' || command === 'pesquisa') {
+    else if(command === 'search' || command === 'pesquisa' || command === 'pesquisar') {
         searchAPI().getSearch(arg).then((nextEvent) => {
-            msg.channel.send(new MessageEmbed()
-                        .setTitle('🤖 Pesquisa 🤖')
-                        .addField(nextEvent.description || 'google.com', nextEvent.body || 'Não encontrado :(')
-                        .setImage(nextEvent.image)
-                        .setFooter('Criado com ❤ por M3SKLV T3CH')
-                        .setColor('#fff200'))
+            if(typeof nextEvent.link === 'string') {
+                msg.channel.send(new MessageEmbed()
+                            .setTitle('🤖 Pesquisa 🤖')
+                            .addField(nextEvent.link +' :mag:' || 'pt.wikipedia.org', nextEvent.body || 'Não encontrado :(')
+                            .setImage(nextEvent.image)
+                            .setFooter('Criado com ❤ por M3SKLV T3CH')
+                            .setColor('#fff200'))
+            } else {
+                msg.channel.send(new MessageEmbed()
+                            .setTitle('🤖 Pesquisa 🤖')
+                            .addField('pt.wikipedia.org' +' :mag:', 'Não encontrado :(')
+                            .setFooter('Criado com ❤ por M3SKLV T3CH')
+                            .setColor('#fff200'))
+            }
         })
     }
 }
