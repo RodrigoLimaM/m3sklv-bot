@@ -12,7 +12,8 @@ module.exports = function commands(msg) {
                         **!sorteio** - Realiza sorteio para X5;
                         **!clima, !tempo ou !weather** - Mostra a previsão do tempo de hoje para São Paulo;
                         **!search, !pesquisar ou !pesquisa** - Realiza e mostra os resultados de uma pesquisa;
-                        **!mastery ou !maestria** - Pesquisa as três maiores maestrias (LOL) do invocador pesquisado.
+                        **!mastery ou !maestria** - Pesquisa as três maiores maestrias (LOL) do invocador pesquisado;
+                        **!elo** - Mostra os elos das ligas (LOL) do invocador pesquisado.
                         `)
                         .setFooter('Criado com ❤ por M3SKLV T3CH')
                         .setColor('#fff200'))
