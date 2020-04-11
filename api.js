@@ -2,6 +2,9 @@ const axios = require('axios');
 
 const searchHostname = 'https://kgsearch.googleapis.com/v1/entities:search?query=SEARCH&key=AIzaSyCZ1atNm5A1DKxNzJNHS0ek91mISVhCJzA&limit=1&indent=True&languages=pt  '
 const weatherHostname = 'https://api.hgbrasil.com/weather?woeid=455827'
+const lolMasteryHostname = 'https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/SUMMONERID?api_key=RGAPI-33acc577-41ff-4564-9779-aabc955d086b'
+const lolSummonerData = 'https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/SUMMONERNAME?api_key=RGAPI-33acc577-41ff-4564-9779-aabc955d086b'
+const lolChampionsData = 'http://ddragon.leagueoflegends.com/cdn/10.7.1/data/en_US/champion.json'
 
 module.exports = function() {
     return {
@@ -44,6 +47,43 @@ module.exports = function() {
                         :arrow_down: Mínima de ${weatherBody.results.forecast[0].min} º graus
                         ${emoji} ${weatherBody.results.forecast[0].description} ${emoji}`
             })
+        },
+
+        getLolMastery: async function getLolMastery(summonerName){
+            const summonerID = await axios.get(lolSummonerData.replace('SUMMONERNAME', summonerName))
+                                .then(function(response){
+                                    const summonerDataBody = response.data
+                                    return summonerDataBody.id
+                                })
+                                .catch(err => 'Não encontrado :(')
+                                
+            return axios.get(lolMasteryHostname.replace('SUMMONERID', summonerID))
+            .then(async function(response){
+                const masteryBody = response.data
+                return `Champion 1 -> ${await getChampionName(masteryBody[0].championId)}
+                        Mastery points-> ${masteryBody[0].championPoints}
+                        
+                        Champion 2 -> ${await getChampionName(masteryBody[1].championId)}
+                        Mastery points-> ${masteryBody[1].championPoints}
+                        
+                        Champion 3 -> ${await getChampionName(masteryBody[2].championId)}
+                        Mastery points-> ${masteryBody[2].championPoints}`
+            })
+            .catch(err => 'Não encontrado :(')
+        }
+    }
+}
+
+async function getChampionName(championId){
+    const championList = await axios.get(lolChampionsData)
+                        .then(function(response) {
+                            return response.data.data
+                        })
+                        .catch(err => 'Não encontrado :(')
+
+    for (let i in championList) {
+        if (championList[i].key == championId){
+            return championList[i].name;
         }
     }
 }

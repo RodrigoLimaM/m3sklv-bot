@@ -8,6 +8,7 @@ const newMemberMessage = require('./events/newMember')
 const commands = require('./commands/commands')
 const weatherReport = require('./commands/weatherReport')
 const search = require('./commands/search')
+const lolMastery = require('./commands/lolMastery')
 
 client.on('ready', () => {
   console.log(`Logado como ${client.user.tag}`)
@@ -31,6 +32,10 @@ client.on('message', msg => {
 
 client.on('message', msg => {
   search(msg)
+})
+
+client.on('message', msg => {
+  lolMastery(msg)
 })
 
 client.on('guildMemberAdd', member => {
