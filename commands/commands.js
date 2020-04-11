@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 const { prefix } = require('../config.json')
 module.exports = function commands(msg) {
-    const command = msg.content.slice(prefix.length).split(' ').shift().toLowerCase();
+    const command = msg.content.slice(prefix.length).split(' ').shift().toLowerCase()
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return
     else if(command === 'commands' || command === 'comandos' || command === 'help' || command === 'ajuda') {

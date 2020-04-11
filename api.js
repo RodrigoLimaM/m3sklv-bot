@@ -3,8 +3,10 @@ const axios = require('axios');
 const searchHostname = 'https://kgsearch.googleapis.com/v1/entities:search?query=SEARCH&key=AIzaSyCZ1atNm5A1DKxNzJNHS0ek91mISVhCJzA&limit=1&indent=True&languages=pt  '
 const weatherHostname = 'https://api.hgbrasil.com/weather?woeid=455827'
 const lolMasteryHostname = 'https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/SUMMONERID?api_key=RGAPI-33acc577-41ff-4564-9779-aabc955d086b'
+const lolMasteryPointsHostname = 'https://br1.api.riotgames.com/lol/champion-mastery/v4/scores/by-summoner/SUMMONERID?api_key=RGAPI-33acc577-41ff-4564-9779-aabc955d086b'
 const lolSummonerData = 'https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/SUMMONERNAME?api_key=RGAPI-33acc577-41ff-4564-9779-aabc955d086b'
 const lolChampionsData = 'http://ddragon.leagueoflegends.com/cdn/10.7.1/data/en_US/champion.json'
+const lolQueuesData = 'https://br1.api.riotgames.com/lol/league/v4/entries/by-summoner/SUMMONERID?api_key=RGAPI-33acc577-41ff-4564-9779-aabc955d086b'
 
 module.exports = function() {
     return {
@@ -50,13 +52,8 @@ module.exports = function() {
         },
 
         getLolMastery: async function getLolMastery(summonerName){
-            const summonerID = await axios.get(lolSummonerData.replace('SUMMONERNAME', summonerName))
-                                .then(function(response){
-                                    const summonerDataBody = response.data
-                                    return summonerDataBody.id
-                                })
-                                .catch(err => 'Não encontrado :(')
-                                
+            const summonerID = await getSummonerId(summonerName)
+
             return axios.get(lolMasteryHostname.replace('SUMMONERID', summonerID))
             .then(async function(response){
                 const masteryBody = response.data
@@ -67,7 +64,27 @@ module.exports = function() {
                         Mastery points-> ${masteryBody[1].championPoints}
                         
                         Champion 3 -> ${await getChampionName(masteryBody[2].championId)}
-                        Mastery points-> ${masteryBody[2].championPoints}`
+                        Mastery points-> ${masteryBody[2].championPoints}
+                        
+                        Total mastery points -> ${await getMasteryPoints(summonerID)}`
+            })
+            .catch(err => 'Não encontrado :(')
+        },
+
+        getLolQueues: async function getLolQueues(summonerName){
+            const summonerID = await getSummonerId(summonerName)
+            return axios.get(lolQueuesData.replace('SUMMONERID', summonerID))
+            .then(async function(response){
+                const queuesBody = response.data
+                let queuesResponse = ''
+                for(let i = 0; i < response.data.length; i++){
+                    queuesResponse += `Queue -> ${queuesBody[i].queueType.includes('FLEX') ? 'Flex' : 'Solo/Duo'}
+                                      Tier -> ${queuesBody[i].tier + ' ' +queuesBody[i].rank}
+                                      W ${queuesBody[i].wins}/L ${queuesBody[i].losses} (${Math.round(queuesBody[i].wins / (queuesBody[i].wins + queuesBody[i].losses) * 100)}%)
+                                      League Points -> ${queuesBody[i].leaguePoints}
+                                      \n`
+                }
+                return queuesResponse
             })
             .catch(err => 'Não encontrado :(')
         }
@@ -86,4 +103,21 @@ async function getChampionName(championId){
             return championList[i].name;
         }
     }
+}
+
+async function getSummonerId(summonerName){
+    return await axios.get(lolSummonerData.replace('SUMMONERNAME', summonerName))
+    .then(function(response){
+        const summonerDataBody = response.data
+        return summonerDataBody.id
+    })
+    .catch(err => 'Não encontrado :(')
+}
+
+async function getMasteryPoints(summonerId) {
+    return await axios.get(lolMasteryPointsHostname.replace('SUMMONERID', summonerId))
+    .then(function(response){
+        return response.data
+    })
+    .catch(err => 'Não encontrado :(')
 }
